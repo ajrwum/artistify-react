@@ -33,7 +33,7 @@ B / List and cards
 
 - Artists
 Fetch all artists from the database.
-Display a card for each album.
+Display a card for each artist.
 Provide a router <Link> to=`artists/${artists._id}`, leading to separate component Artist (details) component.
 If the artists list is empty, provide a default view.
 

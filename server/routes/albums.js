@@ -87,7 +87,6 @@ router.patch("/albums/:id", uploader.single("cover"), (req, res, next) => {
       res.status(201).json(updatedAlbum)
     })
     .catch(next);
-  res.status(200).json({ msg: "@todo" })
 });
 
 router.delete("/albums/:id", (req, res, next) => {
