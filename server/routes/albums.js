@@ -53,14 +53,40 @@ router.get("/albums", (req, res, next) => {
 });
 
 router.get("/albums/:id", (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+  console.log('req.params.id', req.params.id);
+  albumModel
+  .findById(req.params.id)
+  .then(async album => {
+    // console.log('album', album);
+    res.status(200).json(album);
+  })
+  .catch(next);
 });
 
 router.post("/albums", uploader.single("cover"), (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+  const cover = req.file?.path || undefined;
+  const newAlbum = {...req.body, cover};
+  console.log('newAlbum', newAlbum);
+  albumModel
+    .create(newAlbum)
+    .then(createdAlbum => {
+      // console.log('createdAlbum', createdAlbum);
+      res.status(201).json(createdAlbum)
+    })
+    .catch(next);
 });
 
 router.patch("/albums/:id", uploader.single("cover"), (req, res, next) => {
+  let toUpdateAlbum;
+  req.file ? toUpdateAlbum = {...req.body, cover: req.file.path} : toUpdateAlbum = req.body;
+  console.log('toUpdateAlbum', toUpdateAlbum);
+  albumModel
+    .findByIdAndUpdate(req.params.id, toUpdateAlbum)
+    .then(updatedAlbum => {
+      // console.log('updatedAlbum', updatedAlbum);
+      res.status(201).json(updatedAlbum)
+    })
+    .catch(next);
   res.status(200).json({ msg: "@todo" })
 });
 
